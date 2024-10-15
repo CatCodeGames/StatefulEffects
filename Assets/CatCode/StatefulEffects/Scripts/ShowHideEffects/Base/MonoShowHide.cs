@@ -9,7 +9,11 @@ namespace CatCode.ShowHideEffects
 
         public ShowHideState State => _stateTransitionController.State;
 
-        public event Action<IShowHide, ShowHideState> StateChanged;
+        public event Action<ShowHideState> StateChanged
+        {
+            add => _stateTransitionController.StateChanged += value;
+            remove => _stateTransitionController.StateChanged -= value;
+        }
 
         public void Show()
         {

@@ -6,7 +6,7 @@ namespace CatCode.ShowHideEffects
     {
         ShowHideState State { get; }
 
-        event Action<IShowHide, ShowHideState> StateChanged;
+        event Action<ShowHideState> StateChanged;
 
         void Show();
         void Hide();
