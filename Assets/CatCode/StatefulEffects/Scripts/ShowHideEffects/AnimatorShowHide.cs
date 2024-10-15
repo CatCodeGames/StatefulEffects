@@ -5,10 +5,10 @@ namespace CatCode.ShowHideEffects
 {
     public sealed class AnimatorShowHide : MonoShowHide
     {
-        private static int _showHashId = Animator.StringToHash("Show");
-        private static int _shownHashId = Animator.StringToHash("Shown");
-        private static int _hideHashId = Animator.StringToHash("Hide");
-        private static int _hiddenHashId = Animator.StringToHash("Hidden");
+        private static readonly int _showHashID = Animator.StringToHash("Show");
+        private static readonly int _shownHashID = Animator.StringToHash("Shown");
+        private static readonly int _hideHashID = Animator.StringToHash("Hide");
+        private static readonly int _hiddenHashID = Animator.StringToHash("Hidden");
 
         public const string ShowTrigger = "show";
         public const string HideTrigger = "hide";
@@ -56,12 +56,12 @@ namespace CatCode.ShowHideEffects
 
         private void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
         {
-            if (animatorStateInfo.shortNameHash == _showHashId)
+            if (animatorStateInfo.shortNameHash == _showHashID)
             {
                 _onShowCompleted?.Invoke();
                 _onShowCompleted = null;
             }
-            else if (animatorStateInfo.shortNameHash == _hideHashId)
+            else if (animatorStateInfo.shortNameHash == _hideHashID)
             {
                 _onHideCompleted?.Invoke();
                 _onHideCompleted = null;
