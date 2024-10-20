@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CatCode.ShowHideEffects
+namespace CatCode.StatefulEffects
 {
     public interface IShowHide
     {

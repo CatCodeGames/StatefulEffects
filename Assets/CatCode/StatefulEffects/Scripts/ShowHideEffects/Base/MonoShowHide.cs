@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CatCode.ShowHideEffects
+namespace CatCode.StatefulEffects
 {
     public abstract class MonoShowHide : MonoBehaviour, IShowHide
     {
@@ -55,5 +55,24 @@ namespace CatCode.ShowHideEffects
         protected abstract void OnSetShown();
         protected abstract void OnSetHidden();
         protected abstract void OnStop();
+
+
+#if UNITY_EDITOR
+        [ContextMenu("Test Show")]
+        private void TestShow()
+            => Show();
+
+        [ContextMenu("Test Hide")]
+        private void TestHide()
+            => Hide();
+
+        [ContextMenu("Test SetShown")]
+        private void TestSetShown()
+            => SetShown();
+
+        [ContextMenu("Test SetHidden")]
+        private void TestSetHidden()
+            => SetHidden();
+#endif
     }
 }

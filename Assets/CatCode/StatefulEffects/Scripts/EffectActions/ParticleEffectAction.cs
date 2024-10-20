@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CatCode.EffectActions
+namespace CatCode.StatefulEffects
 {
     public sealed class ParticleEffectAction : MonoEffectAction
     {

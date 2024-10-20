@@ -1,4 +1,4 @@
-﻿namespace CatCode.EffectActions
+﻿namespace CatCode.StatefulEffects
 {
     public enum EffectActionState
     {

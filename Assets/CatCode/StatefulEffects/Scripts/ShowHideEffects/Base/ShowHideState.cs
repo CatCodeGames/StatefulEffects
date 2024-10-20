@@ -1,4 +1,4 @@
-﻿namespace CatCode.ShowHideEffects
+﻿namespace CatCode.StatefulEffects
 {
     public enum ShowHideState
     {

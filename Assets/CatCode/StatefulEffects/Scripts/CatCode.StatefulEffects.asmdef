@@ -1,0 +1,18 @@
+{
+    "name": "CatCode.StatefulEffects",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a1953a3df6819694e8bdcd9e3f597d95",
+        "GUID:65265d3a48a13204f9cad7fc00f77441",
+        "GUID:540f1894a9d2a134e82c1da637a74438"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

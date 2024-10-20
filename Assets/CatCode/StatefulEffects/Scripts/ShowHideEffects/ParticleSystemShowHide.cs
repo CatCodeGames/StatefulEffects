@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CatCode.ShowHideEffects
+namespace CatCode.StatefulEffects
 {
     public sealed class ParticleSystemShowHide : MonoShowHide
     {

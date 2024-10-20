@@ -1,5 +1,5 @@
-using CatCode.EffectActions;
-using CatCode.ShowHideEffects;
+using CatCode.StatefulEffects;
+using CatCode.StatefulEffects;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;

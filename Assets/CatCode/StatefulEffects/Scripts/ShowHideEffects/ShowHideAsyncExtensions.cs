@@ -2,18 +2,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CatCode.ShowHideEffects
+namespace CatCode.StatefulEffects
 {
     public static class ShowHideAsyncExtensions
     {
         public static Awaitable StateToAwaitable(this IShowHide showHide, ShowHideState targetState, CancellationToken token)
         {
             var tcs = new AwaitableCompletionSource();
+            CancellationTokenRegistration ctr = default;
             if (showHide.State == targetState)
                 tcs.SetResult();
             else
             {
-                var cts = token.Register(OnCancel);
+                ctr = token.Register(OnCancel);
                 showHide.StateChanged += OnStateChanged;
             }
             return tcs.Awaitable;
@@ -22,12 +23,14 @@ namespace CatCode.ShowHideEffects
             {
                 if (state != targetState)
                     return;
+                ctr.Dispose();
                 showHide.StateChanged -= OnStateChanged;
                 tcs.SetResult();
             }
 
             void OnCancel()
             {
+                ctr.Dispose();
                 showHide.StateChanged -= OnStateChanged;
                 tcs.SetCanceled();
             }
@@ -53,9 +56,9 @@ namespace CatCode.ShowHideEffects
                 return Task.CompletedTask;
 
             var tcs = new TaskCompletionSource<ShowHideState>();
-            var cts = token.Register(OnCancel);
+            CancellationTokenRegistration ctr = default;
+            ctr = token.Register(OnCancel);
             showHide.StateChanged += OnStateChanged;
-
             return tcs.Task;
 
             void OnStateChanged(ShowHideState state)
@@ -63,12 +66,14 @@ namespace CatCode.ShowHideEffects
                 if (state != targetState)
                     return;
                 showHide.StateChanged -= OnStateChanged;
+                ctr.Dispose();
                 tcs.SetResult(state);
             }
 
             void OnCancel()
             {
                 showHide.StateChanged -= OnStateChanged;
+                ctr.Dispose();
                 tcs.SetCanceled();
             }
         }

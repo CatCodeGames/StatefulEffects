@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CatCode.EffectActions
+namespace CatCode.StatefulEffects
 {
     public interface IEffectAction
     { 
