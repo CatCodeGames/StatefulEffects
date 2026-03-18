@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 099cd1f6793af114dbe12bffbadfc67a, type: 3}
+  m_Name: AnimatorShowHideConfig
+  m_EditorClassIdentifier: Assembly-CSharp::CatCode.StatefulEffects.AnimatorShowHideConfig
+  _showState: Show
+  _shownState: Shown
+  _hideState: Hide
+  _hiddenState: Hidden
+  _showTrigger: show
+  _setShownTrigger: set_shown
+  _hideTrigger: hide
+  _setHiddenTrigger: set_hidden
+  _stateEntries:
+  - Hash: -1841531329
+    State: 3
+  - Hash: -822300007
+    State: 2
+  - Hash: 78341141
+    State: 1
+  - Hash: -1879970677
+    State: 0
+  _triggerHashes: 01d90e32fb61cc9b2bcb99a42cdc182c
