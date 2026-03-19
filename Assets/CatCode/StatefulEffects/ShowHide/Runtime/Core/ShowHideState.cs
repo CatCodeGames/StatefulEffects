@@ -1,10 +1,10 @@
-namespace CatCode.StatefulEffects
+﻿namespace CatCode.StatefulEffects
 {
     public enum ShowHideState
     {
         Hidden,
-        Hide,
+        Hiding,
         Shown,
-        Show
+        Showing
     }
 }

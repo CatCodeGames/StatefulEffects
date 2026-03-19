@@ -45,9 +45,9 @@ namespace CatCode.StatefulEffects
         {
             return state switch
             {
-                ShowHideState.Show => _triggerHashes[0],
+                ShowHideState.Showing => _triggerHashes[0],
                 ShowHideState.Shown => _triggerHashes[1],
-                ShowHideState.Hide => _triggerHashes[2],
+                ShowHideState.Hiding => _triggerHashes[2],
                 ShowHideState.Hidden => _triggerHashes[3],
                 _ => 0
             };
@@ -58,9 +58,9 @@ namespace CatCode.StatefulEffects
         {
             _stateEntries = new[]
             {
-                new AnimatorStateEntry { Hash = Animator.StringToHash(_showState),   State = ShowHideState.Show },
+                new AnimatorStateEntry { Hash = Animator.StringToHash(_showState),   State = ShowHideState.Showing },
                 new AnimatorStateEntry { Hash = Animator.StringToHash(_shownState),  State = ShowHideState.Shown },
-                new AnimatorStateEntry { Hash = Animator.StringToHash(_hideState),   State = ShowHideState.Hide },
+                new AnimatorStateEntry { Hash = Animator.StringToHash(_hideState),   State = ShowHideState.Hiding },
                 new AnimatorStateEntry { Hash = Animator.StringToHash(_hiddenState), State = ShowHideState.Hidden }
             };
 

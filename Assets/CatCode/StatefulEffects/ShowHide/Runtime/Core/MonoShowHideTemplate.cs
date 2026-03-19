@@ -26,7 +26,7 @@ namespace CatCode.StatefulEffects
         }
 
         public override void Hide()
-            => _transition.Run(ShowHideState.Hide, ShowHideState.Hidden, OnHide, _allowInterrupt);
+            => _transition.Run(ShowHideState.Hiding, ShowHideState.Hidden, OnHide, _allowInterrupt);
 
         public override void SetHidden()
             => _transition.Set(ShowHideState.Hidden, OnSetHidden);
@@ -35,7 +35,7 @@ namespace CatCode.StatefulEffects
             => _transition.Set(ShowHideState.Shown, OnSetShown);
 
         public override void Show()
-            => _transition.Run(ShowHideState.Show, ShowHideState.Shown, OnShow, _allowInterrupt);
+            => _transition.Run(ShowHideState.Showing, ShowHideState.Shown, OnShow, _allowInterrupt);
 
         public override void Stop()
         {

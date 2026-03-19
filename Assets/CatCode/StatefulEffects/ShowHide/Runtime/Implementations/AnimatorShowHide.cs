@@ -34,9 +34,9 @@ namespace CatCode.StatefulEffects
             _stateBehaviour.StateEnter += OnStateEnter;
         }
 
-        public override void Show() => SetTrigger(ShowHideState.Show);
+        public override void Show() => SetTrigger(ShowHideState.Showing);
         public override void SetShown() => SetTrigger(ShowHideState.Shown);
-        public override void Hide() => SetTrigger(ShowHideState.Hide);
+        public override void Hide() => SetTrigger(ShowHideState.Hiding);
         public override void SetHidden() => SetTrigger(ShowHideState.Hidden);
 
         public override void Stop() => ResetTriggers();

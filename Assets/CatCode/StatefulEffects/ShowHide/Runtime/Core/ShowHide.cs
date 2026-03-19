@@ -18,13 +18,13 @@ namespace CatCode.StatefulEffects
 
 
         public void Show()
-            => _transition.Run(ShowHideState.Show, ShowHideState.Shown, OnShow, _allowInterrupt);
+            => _transition.Run(ShowHideState.Showing, ShowHideState.Shown, OnShow, _allowInterrupt);
 
         public void SetShown()
             => _transition.Set(ShowHideState.Shown, OnSetShown);
 
         public void Hide()
-            => _transition.Run(ShowHideState.Hide, ShowHideState.Hidden, OnHide, _allowInterrupt);
+            => _transition.Run(ShowHideState.Hiding, ShowHideState.Hidden, OnHide, _allowInterrupt);
 
         public void SetHidden()
             => _transition.Set(ShowHideState.Hidden, OnSetHidden);

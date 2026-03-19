@@ -46,7 +46,7 @@ public sealed class ShowHideTester : MonoBehaviour
     private void HideEffects()
     {
         for (int i = 0; i < _effects.Length; i++)
-            _effects[i].Hide();        
+            _effects[i].Hide();
     }
 
 
