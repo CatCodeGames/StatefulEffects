@@ -175,6 +175,9 @@ public async UniTask SpawnEnemyWithPortal()
 }
 ```
 
+## Installation
+
+UPM - `https://github.com/CatCodeGames/StatefulEffects.git?path=Assets/StatefulEffects`
 
 
 
@@ -360,3 +363,6 @@ public async UniTask SpawnEnemyWithPortal()
     await portal.HideAsync(_cts.Token);
 }
 ```
+
+## Установка
+UPM - `https://github.com/CatCodeGames/StatefulEffects.git?path=Assets/StatefulEffects`

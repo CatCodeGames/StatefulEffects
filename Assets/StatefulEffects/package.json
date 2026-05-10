@@ -1,0 +1,15 @@
+{
+  "name": "com.catcode.stateful-effects",
+  "version": "1.0.0",
+  "displayName": "StatefulEffects",
+  "description": "Basic functionality and components for stateful effects",
+  "unity": "2021.3",
+  "author": {
+    "name": "CatCode",
+    "url": "https://github.com/CatCodeGames"
+  },
+  "license": "MIT",
+  "keywords": [
+  ],
+  "dependencies": {}
+}
