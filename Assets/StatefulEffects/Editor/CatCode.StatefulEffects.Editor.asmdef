@@ -1,0 +1,19 @@
+{
+    "name": "CatCode.StatefulEffects.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:62541829ad565ca42b39a2e3539b324a",
+        "GUID:fb0372492d0e7a54c844c70b80c80b58"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

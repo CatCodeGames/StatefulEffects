@@ -1,0 +1,25 @@
+{
+    "name": "CatCode.StatefulEffects.UniTask",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:fb0372492d0e7a54c844c70b80c80b58",
+        "GUID:761abee80c1579c44b0a9e42842ef646",
+        "GUID:62541829ad565ca42b39a2e3539b324a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.cysharp.unitask",
+            "expression": "",
+            "define": "STATEFULEFFECTS_UNITASK_SUPPORT"
+        }
+    ],
+    "noEngineReferences": false
+}
