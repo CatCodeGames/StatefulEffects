@@ -97,34 +97,59 @@ This approach avoids additional inheritance layers and repetitive boilerplate co
 <summary> Example implementation </summary>
   
 ```csharp 
-public sealed class ScaleShowHide : MonoShowHideTemplate
+public sealed class ScaleShowHide : MonoShowHide
 {
     private Tween _tween;
-    protected override void OnShow(Action onCompleted)
+    private IShowHide _showHide;
+
+    [SerializeField] private ShowHideState _initialState;
+    [SerializeField] private bool _ignoreState;
+
+    private void Awake()
+    {
+        _showHide = new ShowHideCallbackStateMachine(_initialState,
+            _ignoreState,
+            OnShow,
+            OnHide,
+            OnSetShown,
+            OnSetHidden,
+            OnStop);
+    }
+
+    private void OnShow(Action onCompleted)
     {
         _tween?.Kill();
         _tween = transform.DOScale(Vector3.one, 1f).OnComplete(() => onCompleted());
     }
-    protected override void OnHide(Action onCompleted)
+    private void OnHide(Action onCompleted)
     {
         _tween?.Kill();
         _tween = transform.DOScale(Vector3.zero, 1f).OnComplete(() => onCompleted());
     }
-    protected override void OnSetShown()
+    private void OnSetShown()
     {
         _tween?.Kill();
         transform.localScale = Vector3.one;
     }
-    protected override void OnSetHidden()
+    private void OnSetHidden()
     {
         _tween?.Kill();
         transform.localScale = Vector3.zero;
     }
-    protected override void OnStop()
+    private void OnStop()
     {
         _tween?.Kill();
     }
-  }
+
+    #region ShowHide
+    public override IReadOnlyEventValue<ShowHideState> State => _showHide.State;
+    public override void Show() => _showHide.Show();
+    public override void SetShown() => _showHide.SetShown();
+    public override void Hide() => _showHide.Hide();
+    public override void SetHidden() => _showHide.SetHidden();
+    public override void Stop() => _showHide.Stop();
+    #endregion
+}
 ```
 </details> 
 
@@ -282,34 +307,59 @@ classDiagram
 <summary> Пример реализации </summary>
   
 ```csharp 
-public sealed class ScaleShowHide : MonoShowHideTemplate
+public sealed class ScaleShowHide : MonoShowHide
 {
     private Tween _tween;
-    protected override void OnShow(Action onCompleted)
+    private IShowHide _showHide;
+
+    [SerializeField] private ShowHideState _initialState;
+    [SerializeField] private bool _ignoreState;
+
+    private void Awake()
+    {
+        _showHide = new ShowHideCallbackStateMachine(_initialState,
+            _ignoreState,
+            OnShow,
+            OnHide,
+            OnSetShown,
+            OnSetHidden,
+            OnStop);
+    }
+
+    private void OnShow(Action onCompleted)
     {
         _tween?.Kill();
         _tween = transform.DOScale(Vector3.one, 1f).OnComplete(() => onCompleted());
     }
-    protected override void OnHide(Action onCompleted)
+    private void OnHide(Action onCompleted)
     {
         _tween?.Kill();
         _tween = transform.DOScale(Vector3.zero, 1f).OnComplete(() => onCompleted());
     }
-    protected override void OnSetShown()
+    private void OnSetShown()
     {
         _tween?.Kill();
         transform.localScale = Vector3.one;
     }
-    protected override void OnSetHidden()
+    private void OnSetHidden()
     {
         _tween?.Kill();
         transform.localScale = Vector3.zero;
     }
-    protected override void OnStop()
+    private void OnStop()
     {
         _tween?.Kill();
     }
-  }
+
+    #region ShowHide
+    public override IReadOnlyEventValue<ShowHideState> State => _showHide.State;
+    public override void Show() => _showHide.Show();
+    public override void SetShown() => _showHide.SetShown();
+    public override void Hide() => _showHide.Hide();
+    public override void SetHidden() => _showHide.SetHidden();
+    public override void Stop() => _showHide.Stop();
+    #endregion
+}
 ```
 </details> 
 
