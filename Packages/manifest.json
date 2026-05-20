@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.catcode.alpha-modifiers": "https://github.com/CatCodeGames/AlphaModifiers.git?path=Assets/AlphaModifiers",
     "com.catcode.events": "https://github.com/CatCodeGames/EventPrimitives.git?path=Assets/Events",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.unity.ide.rider": "3.0.39",

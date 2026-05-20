@@ -1,0 +1,21 @@
+{
+    "name": "CatCode.StatefulEffects.UniTask.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:62541829ad565ca42b39a2e3539b324a",
+        "GUID:fb0372492d0e7a54c844c70b80c80b58",
+        "GUID:2f1322e1d715151488ba96bf949ce8bc",
+        "GUID:5632b7c2abc08134889b998f8a88fb37"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

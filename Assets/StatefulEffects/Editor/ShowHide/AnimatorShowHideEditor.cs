@@ -1,8 +1,7 @@
-﻿using CatCode.StatefulEffects;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace CatCode.ShowHide.EditorTools
+namespace CatCode.StatefulEffects.EditorTools
 {
     [CustomEditor(typeof(AnimatorShowHide), true)]
     public class AnimatorShowHideEditor : Editor

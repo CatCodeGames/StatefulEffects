@@ -1,11 +1,11 @@
-﻿using CatCode.StatefulEffects;
-using UnityEditor;
-using UnityEngine;
-
-namespace CatCode.ShowHide.EditorTools
+﻿
+namespace CatCode.StatefulEffects.EditorTools
 {
-    [CustomEditor(typeof(MonoShowHideTemplate), true)]
-    public class MonoShowHideTemplateEditor : Editor
+    using UnityEditor;
+    using UnityEngine;
+
+    [CustomEditor(typeof(MonoShowHide), true)]
+    public class MonoShowHideEditor : Editor
     {
         private void OnEnable()
         {

@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.catcode.alpha-modifiers": {
+      "version": "https://github.com/CatCodeGames/AlphaModifiers.git?path=Assets/AlphaModifiers",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5ec8c5dd26b3edeeaf6dc80df56b9de2cd1f39cd"
+    },
     "com.catcode.events": {
       "version": "https://github.com/CatCodeGames/EventPrimitives.git?path=Assets/Events",
       "depth": 0,

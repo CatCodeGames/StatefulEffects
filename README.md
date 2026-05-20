@@ -79,22 +79,19 @@ classDiagram
 ```
 
 ## Creating Effects
-To create custom effects, you can use either `MonoShowHide` directly or the template class `MonoShowHideTemplate`.
 
-```mermaid
-flowchart LR
-    I[IShowHide]
-    M[MonoShowHide]
-    T[MonoShowHideTemplate]
+Custom effects are built using the `IShowHide` interface and one of the state machine implementations responsible for object state transitions.
 
-    I --> M
+- `ShowHideCallbackStateMachine` — implements transitions using callback-based logic.
+- `ShowHideUniTaskStateMachine` — implements transitions using asynchronous methods based on UniTask.
 
-    M --> C1[CustomShowHide]
-    M --> T
+Effect implementations define only transition behavior, while the state machine handles state management and transition flow.  
 
-    T --> C2[CustomShowHide]
-```
-`MonoShowHideTemplate` manages state transitions and their sequencing. The base class contains all the necessary control logic, so when implementing an effect you only need to define the behavior for each state.
+Class templates for new effects are available via:  
+`RMB → Create → Scripting → ShowHide`  
+
+Templates include the basic `IShowHide` method implementations and state machine initialization.  
+This approach avoids additional inheritance layers and repetitive boilerplate code.  
 
 <details>
 <summary> Example implementation </summary>
@@ -268,21 +265,18 @@ classDiagram
 ```
 
 ## Создание эффектов
-Для создания собственных эффектов можно использовать ``MonoShowHide`` или шаблонный класс ``MonoShowHideTemplate``.
-```mermaid
-flowchart LR
-    I[IShowHide]
-    M[MonoShowHide]
-    T[MonoShowHideTemplate]
+Для создания собственных эффектов используется интерфейс `IShowHide` и одна из реализаций машины состояний, управляющей переходами между состояниями объекта.
 
-    I --> M
+- `ShowHideCallbackStateMachine` - реализует переходы через callback-вызовы.
+- `ShowHideUniTaskStateMachine` - реализует переходы через асинхронные методы на базе UniTask.
 
-    M --> C1[CustomShowHide]
-    M --> T
+Конкретный эффект реализует только поведение переходов, а управление состояниями и последовательностью переходов выполняет машина состояний.  
 
-    T --> C2[CustomShowHide]
-```
-`MonoShowHideTemplate` управляет переходами между состояниями и их последовательностью. Базовый класс содержит всю необходимую логику контроля, поэтому при создании эффекта достаточно реализовать только поведение для каждого состояния.
+Для создания новых эффектов предусмотрены шаблоны классов, доступные через:  
+`ПКМ → Create → Scripting → ShowHide`.  
+
+Шаблоны содержат базовую реализацию методов интерфейса `IShowHide` и создание машины состояний.  
+Такой подход позволяет избежать дополнительного наследования и повторения однотипного boilerplate-кода.
 
 <details>
 <summary> Пример реализации </summary>

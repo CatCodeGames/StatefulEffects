@@ -1,16 +1,33 @@
-﻿using CatCode.StatefulEffects;
+﻿using CatCode.Events;
+using CatCode.StatefulEffects;
 using DG.Tweening;
 using System;
 using UnityEngine;
 
-public class DemoShowHide : MonoShowHideTemplate
+public sealed class DemoShowHide : MonoShowHide
 {
     private Tween _tween;
+    private IShowHide _showHide;
+
+    [SerializeField] private ShowHideState _initialState;
+    [SerializeField] private bool _ignoreState;
 
     [SerializeField] private Transform _target;
     [SerializeField] private ParticleSystem _hideParticles;
 
-    protected override void OnShow(Action onCompleted)
+    private void Awake()
+    {
+        _showHide = new ShowHideCallbackStateMachine(
+            _initialState,
+            _ignoreState,
+            OnShow,
+            OnHide,
+            OnSetShown,
+            OnSetHidden,
+            OnStop);
+    }
+
+    private void OnShow(Action onCompleted)
     {
         _tween.Kill();
         _target.localScale = new Vector3(1f, 0f, 1f);
@@ -21,13 +38,13 @@ public class DemoShowHide : MonoShowHideTemplate
             .OnComplete(() => onCompleted());
     }
 
-    protected override void OnSetShown()
+    private void OnSetShown()
     {
         _tween.Kill();
         _target.localScale = Vector3.one;
     }
 
-    protected override void OnHide(Action onCompleted)
+    private void OnHide(Action onCompleted)
     {
         _tween.Kill();
         _tween = DOTween.Sequence()
@@ -41,14 +58,26 @@ public class DemoShowHide : MonoShowHideTemplate
             });
     }
 
-    protected override void OnSetHidden()
+    private void OnSetHidden()
     {
         _tween.Kill();
         _target.localScale = Vector3.zero;
     }
 
-    protected override void OnStop()
+    private void OnStop()
     {
         _tween.Kill();
     }
+
+    #region IShowHide 
+
+    public override IReadOnlyEventValue<ShowHideState> State => _showHide.State;
+
+    public override void Show() => _showHide.Show();
+    public override void SetShown() => _showHide.SetShown();
+    public override void Hide() => _showHide.Hide();
+    public override void SetHidden() => _showHide.SetHidden();
+    public override void Stop() => _showHide.Stop();
+
+    #endregion
 }
