@@ -1,6 +1,9 @@
-﻿using CatCode.Events;
+﻿#if STATEFULEFFECTS_DOTWEEN_SUPPORT
+
+using CatCode.Events;
 using DG.Tweening;
 using System;
+
 
 namespace CatCode.StatefulEffects
 {
@@ -85,3 +88,4 @@ namespace CatCode.StatefulEffects
         #endregion
     }
 }
+#endif

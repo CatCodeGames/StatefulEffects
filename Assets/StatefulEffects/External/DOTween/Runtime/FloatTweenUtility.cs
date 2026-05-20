@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿#if STATEFULEFFECTS_DOTWEEN_SUPPORT
+
+using DG.Tweening;
 using System;
 
 namespace CatCode.StatefulEffects
@@ -30,3 +32,4 @@ namespace CatCode.StatefulEffects
         }
     }
 }
+#endif

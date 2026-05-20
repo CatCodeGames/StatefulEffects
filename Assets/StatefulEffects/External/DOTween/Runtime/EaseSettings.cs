@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿#if STATEFULEFFECTS_DOTWEEN_SUPPORT
+
+using DG.Tweening;
 using System;
 using UnityEngine;
 
@@ -12,3 +14,5 @@ namespace CatCode.StatefulEffects
         [field: SerializeField] public AnimationCurve Curve { get; private set; }
     }
 }
+
+#endif

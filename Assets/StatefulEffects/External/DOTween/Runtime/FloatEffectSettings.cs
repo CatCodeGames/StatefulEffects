@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if STATEFULEFFECTS_DOTWEEN_SUPPORT
+
+using System;
 using UnityEngine;
 
 namespace CatCode.StatefulEffects
@@ -11,3 +13,4 @@ namespace CatCode.StatefulEffects
         [field: SerializeField] public EaseSettings Ease { get; private set; }
     }
 }
+#endif
