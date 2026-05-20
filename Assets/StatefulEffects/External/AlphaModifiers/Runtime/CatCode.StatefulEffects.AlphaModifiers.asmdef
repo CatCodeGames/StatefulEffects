@@ -2,11 +2,10 @@
     "name": "CatCode.StatefulEffects.AlphaModifiers",
     "rootNamespace": "",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:fb0372492d0e7a54c844c70b80c80b58",
-        "GUID:761abee80c1579c44b0a9e42842ef646",
-        "GUID:62541829ad565ca42b39a2e3539b324a",
-        "GUID:cfa4952a06eabdf449c31a9add2e8330"
+        "CatCode.StatefulEffects",
+        "DOTween.Modules",
+        "CatCode.Events",
+        "CatCode.AlphaModifiers"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -17,14 +16,14 @@
     "defineConstraints": [],
     "versionDefines": [
         {
-            "name": "com.cysharp.unitask",
+            "name": "com.demigiant.dotween",
             "expression": "",
-            "define": "STATEFULEFFECTS_UNITASK_SUPPORT"
+            "define": "STATEFULEFFECTS_DOTWEEN_SUPPORT"
         },
         {
             "name": "com.catcode.alpha-modifiers",
             "expression": "",
-            "define": "STATEFULEFFECTS_ALPHA_SUPPORT"
+            "define": "STATEFULEFFECTS_ALPHAMODIFIERS_SUPPORT"
         }
     ],
     "noEngineReferences": false
