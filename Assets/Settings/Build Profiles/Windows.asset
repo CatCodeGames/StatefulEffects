@@ -23,6 +23,7 @@ MonoBehaviour:
   m_HasScriptingDefines: 1
   m_ScriptingDefines:
   - STATEFULEFFECTS_DOTWEEN_SUPPORT
+  - UNITASK_DOTWEEN_SUPPORT
   m_PlayerSettingsYaml:
     m_Settings: []
   references:

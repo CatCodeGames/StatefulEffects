@@ -5,25 +5,26 @@ namespace CatCode.StatefulEffects
 {
     public sealed class AnimatorShowHide : MonoShowHide
     {
-        private bool _initialized;
         private StateChangeBehaviour _stateBehaviour;
 
         [SerializeField] private AnimatorShowHideConfig _config;
         [SerializeField] private Animator _animator;
 
         private EventValue<ShowHideState> _state;
+        private bool _isRunning;
 
+        public override bool IsRunning => _isRunning;
         public override IReadOnlyEventValue<ShowHideState> State => _state;
+
+        public override bool Initialized { get; protected set; }
 
         private void Awake()
             => Initialize();
 
-
         public override void Initialize()
         {
-            if (_initialized)
+            if (Initialized)
                 return;
-            _initialized = true;
 
             var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             var state = _config.GetStateByHash(stateInfo.shortNameHash);
@@ -32,19 +33,25 @@ namespace CatCode.StatefulEffects
 
             _stateBehaviour = _animator.GetBehaviour<StateChangeBehaviour>();
             _stateBehaviour.StateEnter += OnStateEnter;
+
+            Initialized = true;
         }
 
         public override void Show() => SetTrigger(ShowHideState.Showing);
         public override void SetShown() => SetTrigger(ShowHideState.Shown);
         public override void Hide() => SetTrigger(ShowHideState.Hiding);
         public override void SetHidden() => SetTrigger(ShowHideState.Hidden);
-
-        public override void Stop() => ResetTriggers();
+        public override void Stop()
+        {
+            ResetTriggers();
+            _isRunning = false;
+        }
 
 
         private void SetTrigger(ShowHideState state)
         {
             ResetTriggers();
+            _isRunning = true;
             _animator.SetTrigger(_config.GetTriggerForState(state));
         }
 

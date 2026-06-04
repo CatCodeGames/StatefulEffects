@@ -5,8 +5,8 @@ namespace CatCode.StatefulEffects
 {
     public sealed class ShowHideCallbackStateMachine : IShowHide
     {
-        private readonly static Action<Action> s_emptyAction = (callback) => callback();
-        private readonly static Action s_emptySet = () => { };
+        private readonly static Action<Action> s_emptyCallbackAction = (callback) => callback();
+        private readonly static Action s_emptyAction = () => { };
 
         private readonly EventValue<ShowHideState> _state;
         private readonly bool _ignoreState;
@@ -20,6 +20,9 @@ namespace CatCode.StatefulEffects
         private readonly Action _onShowCompleted;
         private readonly Action _onHideCompleted;
 
+        private bool _isRunning;
+
+        public bool IsRunning => _isRunning;
         public IReadOnlyEventValue<ShowHideState> State => _state;
 
         public ShowHideCallbackStateMachine(
@@ -34,11 +37,11 @@ namespace CatCode.StatefulEffects
             _state = new EventValue<ShowHideState>(initialState);
             _ignoreState = ignoreState;
 
-            _onShow = onShow ?? s_emptyAction;
-            _onHide = onHide ?? s_emptyAction;
-            _onSetShown = onSetShown ?? s_emptySet;
-            _onSetHidden = onSetHidden ?? s_emptySet;
-            _onStop = onStop ?? s_emptySet;
+            _onShow = onShow ?? s_emptyCallbackAction;
+            _onHide = onHide ?? s_emptyCallbackAction;
+            _onSetShown = onSetShown ?? s_emptyAction;
+            _onSetHidden = onSetHidden ?? s_emptyAction;
+            _onStop = onStop ?? s_emptyAction;
 
             _onShowCompleted = OnShowCompleted;
             _onHideCompleted = OnHideCompleted;
@@ -46,34 +49,36 @@ namespace CatCode.StatefulEffects
 
         public void Show()
         {
-            if (!_ignoreState && (_state.Value is ShowHideState.Showing or ShowHideState.Shown))
+            if (_isRunning && !_ignoreState && (_state.Value is ShowHideState.Showing or ShowHideState.Shown))
                 return;
-            _state.Value = ShowHideState.Shown;
+            _isRunning = true;
+            _state.Value = ShowHideState.Showing;
             _onShow(_onShowCompleted);
         }
 
         public void SetShown()
         {
-            if (!_ignoreState && (_state.Value is ShowHideState.Shown))
+            if (_isRunning && !_ignoreState && (_state.Value is ShowHideState.Shown))
                 return;
+            _isRunning = true;
             _onSetShown();
             _state.Value = ShowHideState.Shown;
         }
 
         public void Hide()
         {
-            if (!_ignoreState && (_state.Value is ShowHideState.Hiding or ShowHideState.Hidden))
+            if (_isRunning && !_ignoreState && (_state.Value is ShowHideState.Hiding or ShowHideState.Hidden))
                 return;
-
+            _isRunning = true;
             _state.Value = ShowHideState.Hiding;
             _onHide(_onHideCompleted);
         }
 
         public void SetHidden()
         {
-            if (!_ignoreState && (_state.Value is ShowHideState.Hidden))
+            if (_isRunning && !_ignoreState && (_state.Value is ShowHideState.Hidden))
                 return;
-
+            _isRunning = true;
             _onSetHidden();
             _state.Value = ShowHideState.Hidden;
         }
@@ -81,6 +86,7 @@ namespace CatCode.StatefulEffects
         public void Stop()
         {
             _onStop();
+            _isRunning = false;
         }
 
         private void OnShowCompleted() => _state.Value = ShowHideState.Shown;

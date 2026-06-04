@@ -2,14 +2,13 @@
 #if STATEFULEFFECTS_DOTWEEN_SUPPORT
 
 using CatCode.AlphaModifiers;
-using CatCode.Events;
 using DG.Tweening;
 using System;
 using UnityEngine;
 
 namespace CatCode.StatefulEffects
 {
-    public sealed class AlphaModifierShowHide : MonoShowHide
+    public sealed class AlphaModifierShowHide : CallbackMonoShowHide
     {
         [Serializable]
         public struct AlphaEffectSettings
@@ -21,12 +20,7 @@ namespace CatCode.StatefulEffects
             public AnimationCurve Curve;
         }
 
-        private bool _initialized;
         private Tween _tween;
-        private IShowHide _showHide;
-
-        [SerializeField] private ShowHideState _initialState;
-        [SerializeField] private bool _ignoreState;
 
         [SerializeField] private MonoAlphaModifier _alphaModifier;
         [SerializeField] private AlphaEffectSettings _showSettings;
@@ -38,19 +32,13 @@ namespace CatCode.StatefulEffects
             Initialize();
         }
 
-        public override void Initialize()
-        {
-            if (_initialized)
-                return;
-            _initialized = true;
-            _showHide = new ShowHideCallbackStateMachine(_initialState, _ignoreState, OnShow, OnHide, OnSetShown, OnSetHidden, OnStop);
-        }
+    
 
-        private void OnShow(Action onCompleted) => ChangeAlpha(_showSettings, onCompleted);
-        private void OnSetShown() => SetAlpha(_showSettings);
-        private void OnHide(Action onCompleted) => ChangeAlpha(_hideSettings, onCompleted);
-        private void OnSetHidden() => SetAlpha(_hideSettings);
-        private void OnStop() => _tween.Kill();
+        protected override void OnShow(Action onCompleted) => ChangeAlpha(_showSettings, onCompleted);
+        protected override void OnSetShown() => SetAlpha(_showSettings);
+        protected override void OnHide(Action onCompleted) => ChangeAlpha(_hideSettings, onCompleted);
+        protected override void OnSetHidden() => SetAlpha(_hideSettings);
+        protected override void OnStop() => _tween.Kill();
 
         private void ChangeAlpha(AlphaEffectSettings settings, Action callback)
         {
@@ -71,18 +59,6 @@ namespace CatCode.StatefulEffects
             _tween.Kill();
             _alphaModifier.Alpha = settings.Alpha;
         }
-
-        #region IShowHide 
-
-        public override IReadOnlyEventValue<ShowHideState> State => _showHide.State;
-
-        public override void Show() => _showHide.Show();
-        public override void SetShown() => _showHide.SetShown();
-        public override void Hide() => _showHide.Hide();
-        public override void SetHidden() => _showHide.SetHidden();
-        public override void Stop() => _showHide.Stop();
-
-        #endregion
     }
 }
 #endif

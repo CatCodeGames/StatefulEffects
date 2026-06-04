@@ -9,7 +9,7 @@ namespace CatCode.StatefulEffects
 {
     public sealed class FloatProxyShowHide : IShowHide
     {
-        private readonly IShowHide _showHide;
+        private readonly IShowHide _stm;
 
         private Tween _tween;
 
@@ -36,7 +36,7 @@ namespace CatCode.StatefulEffects
 
             _onUpdate = value => _setValue(value);
 
-            _showHide = new ShowHideCallbackStateMachine(
+            _stm = new ShowHideCallbackStateMachine(
                 initialState,
                 ignoreState,
                 OnShow,
@@ -78,12 +78,13 @@ namespace CatCode.StatefulEffects
 
         #region IShowHide
 
-        public IReadOnlyEventValue<ShowHideState> State => _showHide.State;
-        public void Hide() => _showHide.Hide();
-        public void SetHidden() => _showHide.SetHidden();
-        public void SetShown() => _showHide.SetShown();
-        public void Show() => _showHide.Show();
-        public void Stop() => _showHide.Stop();
+        public bool IsRunning => _stm.IsRunning;
+        public IReadOnlyEventValue<ShowHideState> State => _stm.State;
+        public void Hide() => _stm.Hide();
+        public void SetHidden() => _stm.SetHidden();
+        public void SetShown() => _stm.SetShown();
+        public void Show() => _stm.Show();
+        public void Stop() => _stm.Stop();
 
         #endregion
     }

@@ -5,9 +5,11 @@ namespace CatCode.StatefulEffects
 {
     public abstract class MonoShowHide : MonoBehaviour, IShowHide
     {
+        public abstract bool Initialized { get; protected set; }
+        public abstract bool IsRunning { get; }
         public abstract IReadOnlyEventValue<ShowHideState> State { get; }
 
-        public virtual void Initialize() { }
+        public abstract void Initialize();
 
         public abstract void Show();
         public abstract void SetShown();

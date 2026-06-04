@@ -1,64 +1,47 @@
-﻿using CatCode.Events;
-using System;
+﻿using System;
 using UnityEngine;
 
 
 namespace CatCode.StatefulEffects
 {
-
-    public sealed class ParticleSystemShowHide : MonoShowHide
+    public sealed class ParticleSystemShowHide : CallbackMonoShowHide
     {
-        private Action _onStopped;
-        private IShowHide _showHide;
+        private Action _onCompleted;
 
-        [SerializeField] private ShowHideState _initialState;
-        [SerializeField] private bool _ignoreState;
         [SerializeField] private ParticleSystemStopListener[] _particleSystems;
 
-        private void Awake()
-        {
-            _showHide = new ShowHideCallbackStateMachine(
-                _initialState,
-                _ignoreState,
-                OnShow,
-                OnHide,
-                OnSetShown,
-                OnSetHidden,
-                OnStop);
-        }
-
-        private void OnEnable()
+        protected override void OnInitialize()
         {
             for (int i = 0; i < _particleSystems.Length; i++)
                 _particleSystems[i].Stopped.Raised += OnParticleSystemStopCallback;
         }
 
-        private void OnDisable()
+        protected override void OnDestroy()
         {
             for (int i = 0; i < _particleSystems.Length; i++)
                 _particleSystems[i].Stopped.Raised -= OnParticleSystemStopCallback;
         }
 
-        private void OnShow(Action onCompleted)
+        protected override void OnShow(Action onCompleted)
         {
             PlayParticles();
             onCompleted?.Invoke();
         }
 
-        private void OnSetShown()
+        protected override void OnSetShown()
            => PlayPrewarmParticles();
 
-        private void OnHide(Action onCompleted)
+        protected override void OnHide(Action onCompleted)
         {
-            _onStopped = onCompleted;
+            _onCompleted = onCompleted;
             StopParticles();
         }
 
-        private void OnSetHidden()
+        protected override void OnSetHidden()
             => StopAndClearParticles();
 
-        private void OnStop()
-            => _onStopped = null;
+        protected override void OnStop()
+            => _onCompleted = null;
 
 
         private void OnParticleSystemStopCallback()
@@ -66,7 +49,7 @@ namespace CatCode.StatefulEffects
             for (int i = 0; i < _particleSystems.Length; i++)
                 if (_particleSystems[i].IsAlive)
                     return;
-            _onStopped?.Invoke();
+            _onCompleted?.Invoke();
         }
 
         private void PlayParticles()
@@ -101,17 +84,6 @@ namespace CatCode.StatefulEffects
                 _particleSystems[i].ParticleSystem.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
-        #region IShowHide 
-
-        public override IReadOnlyEventValue<ShowHideState> State => _showHide.State;
-
-        public override void Show() => _showHide.Show();
-        public override void SetShown() => _showHide.SetShown();
-        public override void Hide() => _showHide.Hide();
-        public override void SetHidden() => _showHide.SetHidden();
-        public override void Stop() => _showHide.Stop();
-
-        #endregion
 
 #if UNITY_EDITOR
         private void Reset()

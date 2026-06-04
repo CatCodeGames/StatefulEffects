@@ -37,7 +37,8 @@ namespace CatCode.StatefulEffects.EditorTools
                 stateText = showHide.State.Value.ToString();
 
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.LabelField("State", stateText);
+            EditorGUILayout.LabelField("IsRunning", showHide.IsRunning.ToString());
+            EditorGUILayout.LabelField("Initialized", showHide.Initialized.ToString());
             EditorGUI.EndDisabledGroup();
         }
     }

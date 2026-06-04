@@ -4,6 +4,7 @@ namespace CatCode.StatefulEffects
 {
     public interface IShowHide
     {
+        bool IsRunning { get; }
         IReadOnlyEventValue<ShowHideState> State { get; }
 
         void Show();
@@ -11,5 +12,5 @@ namespace CatCode.StatefulEffects
         void SetShown();
         void SetHidden();
         void Stop();
-    }
+    }        
 }
