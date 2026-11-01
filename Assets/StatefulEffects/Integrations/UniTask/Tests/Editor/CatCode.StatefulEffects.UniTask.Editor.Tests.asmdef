@@ -1,0 +1,34 @@
+﻿{
+    "name": "CatCode.StatefulEffects.UniTask.Editor.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:62541829ad565ca42b39a2e3539b324a",
+        "GUID:2f1322e1d715151488ba96bf949ce8bc",
+        "GUID:114bb123a8044935b42c53d14f4cd0d9",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS",
+        "STATEFULEFFECTS_UNITASK_SUPPORT"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.cysharp.unitask",
+            "expression": "",
+            "define": "STATEFULEFFECTS_UNITASK_SUPPORT"
+        }
+    ],
+    "noEngineReferences": false
+}

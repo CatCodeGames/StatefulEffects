@@ -1,6 +1,6 @@
 {
   "name": "com.catcode.stateful-effects",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "displayName": "StatefulEffects",
   "description": "Basic functionality and components for stateful effects",
   "unity": "2021.3",
@@ -9,7 +9,13 @@
     "url": "https://github.com/CatCodeGames"
   },
   "license": "MIT",
+  "documentationUrl": "https://github.com/CatCodeGames/StatefulEffects#readme",
+  "changelogUrl": "https://github.com/CatCodeGames/StatefulEffects/blob/main/Assets/StatefulEffects/CHANGELOG.md",
+  "licensesUrl": "https://github.com/CatCodeGames/StatefulEffects/blob/main/Assets/StatefulEffects/LICENSE.md",
   "keywords": [
   ],
-  "dependencies": {}
+  "dependencies": {
+    "com.unity.modules.animation": "1.0.0",
+    "com.unity.modules.particlesystem": "1.0.0"
+  }
 }

@@ -4,7 +4,6 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public sealed class ShowHideTester : MonoBehaviour
 {
     private CancellationTokenSource _cts;
@@ -24,49 +23,12 @@ public sealed class ShowHideTester : MonoBehaviour
     {
         _showButton.onClick.AddListener(ShowEffectsAsync);
         _hideButton.onClick.AddListener(HideEffectsAsync);
-
-        //_showButton.onClick.AddListener(ShowEffect);
-        //_hideButton.onClick.AddListener(HideEffects);
     }
 
     private void OnDisable()
     {
         _showButton.onClick.RemoveListener(ShowEffectsAsync);
         _hideButton.onClick.RemoveListener(HideEffectsAsync);
-
-        //_showButton.onClick.RemoveListener(ShowEffect);
-        //_hideButton.onClick.RemoveListener(HideEffects);
-    }
-
-    private void ShowEffect()
-    {
-        for (int i = 0; i < _effects.Length; i++)
-            _effects[i].Show();
-    }
-
-    private void HideEffects()
-    {
-        for (int i = 0; i < _effects.Length; i++)
-            _effects[i].Hide();
-    }
-
-
-    private async void HideEffectsAsync()
-    {
-        _cts?.Cancel();
-        _cts?.Dispose();
-        _cts = new CancellationTokenSource();
-
-        try
-        {
-            for (int i = 0; i < _effects.Length; i++)
-                await _effects[i].HideAsync(_cts.Token);
-            Debug.Log("Hidden");
-        }
-        catch (OperationCanceledException)
-        {
-            Debug.Log("Cancelled");
-        }
     }
 
     private async void ShowEffectsAsync()
@@ -78,12 +40,34 @@ public sealed class ShowHideTester : MonoBehaviour
         try
         {
             for (int i = 0; i < _effects.Length; i++)
-                await _effects[i].ShowAsync(_cts.Token);
-            Debug.Log("SHOWN");
+            {
+                var result = await _effects[i].ShowAsync(_cts.Token);
+                Debug.Log($"{_effects[i].name}: Show {result}");
+            }
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("Cancelled");
+            Debug.Log("Show cancelled");
+        }
+    }
+
+    private async void HideEffectsAsync()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+        _cts = new CancellationTokenSource();
+
+        try
+        {
+            for (int i = 0; i < _effects.Length; i++)
+            {
+                var result = await _effects[i].HideAsync(_cts.Token);
+                Debug.Log($"{_effects[i].name}: Hide {result}");
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("Hide cancelled");
         }
     }
 }

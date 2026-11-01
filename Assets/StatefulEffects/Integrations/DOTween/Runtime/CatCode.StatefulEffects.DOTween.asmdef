@@ -1,0 +1,24 @@
+{
+    "name": "CatCode.StatefulEffects.DOTween",
+    "rootNamespace": "",
+    "references": [
+        "CatCode.StatefulEffects"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "DOTWEEN || STATEFULEFFECTS_DOTWEEN_SUPPORT"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.demigiant.dotween",
+            "expression": "",
+            "define": "STATEFULEFFECTS_DOTWEEN_SUPPORT"
+        }
+    ],
+    "noEngineReferences": false
+}

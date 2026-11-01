@@ -5478,51 +5478,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &945656119
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 945656121}
-  - component: {fileID: 945656120}
-  m_Layer: 0
-  m_Name: ShowHideAsyncTester
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &945656120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 945656119}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a996b2ce8469b34784aed9063c430ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShowHideAsyncTester
-  _showHide: {fileID: 1936041102}
---- !u!4 &945656121
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 945656119}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1085278840
 GameObject:
   m_ObjectHideFlags: 0
@@ -11013,7 +10968,7 @@ GameObject:
   - component: {fileID: 1936041103}
   - component: {fileID: 1936041102}
   m_Layer: 0
-  m_Name: DemoShowHideAsync
+  m_Name: DemoPopShowHide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11030,9 +10985,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31f1c08ef8cb21c4abbb4202017f7cb1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DemoShowHideAsync
-  _initialState: 2
-  _ignoreState: 0
+  m_EditorClassIdentifier: Assembly-CSharp::DemoPopShowHide
+  _policy:
+    Show:
+      OnInterrupt: 0
+      OnRepeat: 0
+    Hide:
+      OnInterrupt: 0
+      OnRepeat: 0
   _target: {fileID: 1601639457}
 --- !u!4 &1936041103
 Transform:
@@ -11260,7 +11220,7 @@ GameObject:
   - component: {fileID: 6576264889350947155}
   - component: {fileID: 6576264889350947156}
   m_Layer: 0
-  m_Name: DemoShowHide
+  m_Name: DemoSquashShowHide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11294,9 +11254,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1339ddf331351246950a4b86c5d0e1d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DemoShowHide
-  _initialState: 2
-  _ignoreState: 0
+  m_EditorClassIdentifier: Assembly-CSharp::DemoSquashShowHide
+  _policy:
+    Show:
+      OnInterrupt: 0
+      OnRepeat: 0
+    Hide:
+      OnInterrupt: 0
+      OnRepeat: 0
   _target: {fileID: 1288445816398339111}
   _hideParticles: {fileID: 38965216}
 --- !u!33 &8892625202577381470
@@ -11319,4 +11284,3 @@ SceneRoots:
   - {fileID: 1100134507}
   - {fileID: 720806519}
   - {fileID: 1913931377}
-  - {fileID: 945656121}

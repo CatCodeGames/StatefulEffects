@@ -1,412 +1,235 @@
-# **1. Overview**
+English | [Русский](README.ru.md)
 
-`ShowHide` is a simple system for controlling the visibility of objects in Unity.
-The system is based on an effect model with four states:
+# StatefulEffects
 
-- `Shown` — the object is fully visible  
-- `Hidden` — the object is fully hidden
-- `Show` — the process of showing, transitioning to the `Shown` state
-- `Hide` — the process of hiding, transitioning to the `Hidden` state
-
-```mermaid
-stateDiagram-v2
-    direction LR
-
-    Hidden --> Show : Show()
-    Show --> Shown
-
-    Shown --> Hide : Hide()
-    Hide --> Hidden
-```
-
-```mermaid
-stateDiagram-v2
-    direction LR
-
-    Hidden --> Shown : SetShown()
-    Shown --> Hidden : SetHidden()
-```
-
-The main goal of the system is to standardize how show/hide effects are handled.
-This provides the following benefits:
-- the controlling code does not depend on how the effect is implemented
-- effects can be easily replaced without modifying the control logic
-
-The system does not impose any restrictions on implementation details:
-- effects can be implemented using any approach (Animator, Tweening, Coroutines, etc.)
-- any visual components can be used (UI, Sprite, Particle System, etc.)
-All implementation details are encapsulated and hidden behind a unified control interface.
-
-
-# **2. Code**
-## IShowHide
-A single interface `IShowHide` is used to work with effects.
-
-```mermaid
-classDiagram
-    class IShowHide {
-        <<interface>>
-        +ShowHideState State 
-        +Show()
-        +Hide()
-        +SetShown()
-        +SetHidden()
-        +Stop()
-    }
-```
-
-It defines a standard set of methods for controlling object states:
-- ``void Show()``   	- start showing
-- ``void Hide()``	- start hiding
-- ``void SetShown()`` 	- immediately set the state to Shown
-- ``void SetHidden()`` 	- immediately set the state to Hidden
-- ``void Stop()`` 	- interrupt the current transition
-
-## MonoShowHide
-`MonoShowHide` — is a ready-to-use Unity component that implements `IShowHide`.
-
-```mermaid
-classDiagram
-    class IShowHide {
-        <<interface>>
-    }
-
-    class MonoShowHide
-    class MonoBehaviour
-
-    IShowHide <|.. MonoShowHide
-    MonoBehaviour <|-- MonoShowHide
-```
-
-## Creating Effects
-
-Custom effects are built using the `IShowHide` interface and one of the state machine implementations responsible for object state transitions.
-
-- `ShowHideCallbackStateMachine` — implements transitions using callback-based logic.
-- `ShowHideUniTaskStateMachine` — implements transitions using asynchronous methods based on UniTask.
-
-Effect implementations define only transition behavior, while the state machine handles state management and transition flow.  
-
-Class templates for new effects are available via:  
-`RMB → Create → Scripting → ShowHide`  
-
-Templates include the basic `IShowHide` method implementations and state machine initialization.  
-This approach avoids additional inheritance layers and repetitive boilerplate code.  
-
-<details>
-<summary> Example implementation </summary>
-  
-```csharp 
-public sealed class ScaleShowHide : MonoShowHide
-{
-    private Tween _tween;
-    private IShowHide _showHide;
-
-    [SerializeField] private ShowHideState _initialState;
-    [SerializeField] private bool _ignoreState;
-
-    private void Awake()
-    {
-        _showHide = new ShowHideCallbackStateMachine(_initialState,
-            _ignoreState,
-            OnShow,
-            OnHide,
-            OnSetShown,
-            OnSetHidden,
-            OnStop);
-    }
-
-    private void OnShow(Action onCompleted)
-    {
-        _tween?.Kill();
-        _tween = transform.DOScale(Vector3.one, 1f).OnComplete(() => onCompleted());
-    }
-    private void OnHide(Action onCompleted)
-    {
-        _tween?.Kill();
-        _tween = transform.DOScale(Vector3.zero, 1f).OnComplete(() => onCompleted());
-    }
-    private void OnSetShown()
-    {
-        _tween?.Kill();
-        transform.localScale = Vector3.one;
-    }
-    private void OnSetHidden()
-    {
-        _tween?.Kill();
-        transform.localScale = Vector3.zero;
-    }
-    private void OnStop()
-    {
-        _tween?.Kill();
-    }
-
-    #region ShowHide
-    public override IReadOnlyEventValue<ShowHideState> State => _showHide.State;
-    public override void Show() => _showHide.Show();
-    public override void SetShown() => _showHide.SetShown();
-    public override void Hide() => _showHide.Hide();
-    public override void SetHidden() => _showHide.SetHidden();
-    public override void Stop() => _showHide.Stop();
-    #endregion
-}
-```
-</details> 
-
-This approach allows you to:
-- speed up the creation of new effects using the template
-- use a unified interface across all effects
-- replace implementations without changing the control logic
-The system also supports asynchronous methods, enabling the use of `await` for sequential workflows.
-
-
-# **3. Usage**
-## Basic Scenario
-Example of using an effect in code::
-
-```csharp
-[SerializeField] private MonoShowHide _effect;
-
-public void ControlEffect()
-{
-    // start showing
-    _effect.Show();
-
-    // start hidding
-    _effect.Hide();
-
-    // state check
-    if (_effect.State.Value != ShowHideState.Hidden)
-    {
-        _effect.State.Changed += OnStateChanged;
-    }
-}
-```
-
-## Asynchronous Scenario
-```csharp
-private CancellationTokenSource _cts;
-private IObjectPool<MonoShowHide> _portalsPool;
-
-public async UniTask SpawnEnemyWithPortal()
-{
-    using var handle = _portalsPool.Get(out var portal);
-    await portal.ShowAsync(_cts.Token);
-    await SpawnEnemy();
-    await portal.HideAsync(_cts.Token);
-}
-```
+A library that brings effects in Unity to a single interface. The controlling code works with an effect only through this interface, so the effect itself can be built on anything: Animator, tweens, coroutines, particles or UI. As a result:
+- an effect can be replaced with another one without changing the controlling code;
+- game scenarios are written once and work with any effects.
 
 ## Installation
 
-UPM - `https://github.com/CatCodeGames/StatefulEffects.git?path=Assets/StatefulEffects`
+Unity 2021.3 or newer. Package Manager → *Add package from git URL*:
 
+```
+https://github.com/CatCodeGames/StatefulEffects.git?path=Assets/StatefulEffects
+```
 
+# ShowHide
 
+An interface and base classes for objects and effects with two stable states and transitions between them. Suitable for windows, panels, long-running effects and anything that turns on and off.
 
----
+## States
 
+- `Hidden` — the object is hidden or inactive
+- `Showing` — transition to `Shown`
+- `Shown` — the object is visible or active
+- `Hiding` — transition to `Hidden`
+- `None` — the state is unknown: control has not started yet or was stopped with `Stop()`
 
+The current state is stored in `State`, and the `OnStateChanged` event is raised when it changes.
 
-# **1. Описание**
-
-`ShowHide` — простая система для управления показом и скрытием объектов в Unity.
-Система основана на модели эффектов с четырьмя состояниями:
-
-- `Shown` — объект полностью видим  
-- `Hidden` — объект полностью скрыт  
-- `Show` — процесс показа с переходом к состоянию `Shown`  
-- `Hide` — процесс скрытия с переходом к состоянию `Hidden`  
+Animated transitions:
 
 ```mermaid
 stateDiagram-v2
     direction LR
 
-    Hidden --> Show : Show()
-    Show --> Shown
-
-    Shown --> Hide : Hide()
-    Hide --> Hidden
+    None --> Showing : Show()
+    None --> Hiding : Hide()
+    Hidden --> Showing : Show()
+    Showing --> Shown
+    Shown --> Hiding : Hide()
+    Hiding --> Hidden
+    Showing --> Hiding : Hide()
+    Hiding --> Showing : Show()
 ```
+
+Instant commands work from any state:
 
 ```mermaid
 stateDiagram-v2
     direction LR
 
-    Hidden --> Shown : SetShown()
-    Shown --> Hidden : SetHidden()
+    state "Any state" as Any
+    Any --> Shown : SetShown()
+    Any --> Hidden : SetHidden()
+    Any --> None : Stop()
 ```
 
-Основная цель системы — стандартизация работы с эффектами показа и скрытия.
-Благодаря этому:
-- управляющий код не зависит от способа реализации эффектов
-- эффекты можно легко заменять без изменения управляющей логики
+## Example
 
-Система не ограничивает способ реализации: 
-- эффекты могут быть построены на любой другой логике (Animator, Tween, Coroutines и т.д.)
-- использовать любые визуальные компоненты (UI, Sprite, Particle System и др.)
-  
-Все детали реализации инкапсулированы и скрыты за единым интерфейсом управления.
+```csharp
+[SerializeField] private MonoShowHide _portalPrefab;
 
-
-# **2. Код**
-## IShowHide
-Для работы с эффектами используется единый интерфейс IShowHide.
-
-```mermaid
-classDiagram
-    class IShowHide {
-        <<interface>>
-        +ShowHideState State 
-        +Show()
-        +Hide()
-        +SetShown()
-        +SetHidden()
-        +Stop()
-    }
+public async UniTask SpawnPortal(CancellationToken token)
+{
+    var portal = Instantiate(_portalPrefab);
+    portal.SetHidden();                 // set the initial state
+    await portal.ShowAsync(token);      // show and wait until finished
+    await SpawnEnemy();
+    await portal.HideAsync(token);      // hide and wait until finished
+}
 ```
 
-Он задаёт стандартный набор методов для управления состояниями объектов:
-- ``void Show()``   	- начать показ
-- ``void Hide()``	- начать скрытие
-- ``void SetShown()`` 	- мгновенно установить состояние Shown
-- ``void SetHidden()`` 	- мгновенно установить состояние Hidden
-- ``void Stop()`` 	- прервать текущий переход
+`ShowAsync` and `HideAsync` are available when UniTask is installed. Without it, use `Show()`, `Hide()` and the `OnStateChanged` event.
 
 ## MonoShowHide
-``MonoShowHide`` — готовый компонент для Unity, который реализует IShowHide.
 
-```mermaid
-classDiagram
-    class IShowHide {
-        <<interface>>
-    }
+Unity does not serialize interface fields, so inspector references are declared as `MonoShowHide`. It is an abstract `MonoBehaviour` that implements `IShowHide` without any logic of its own — essentially an interface for the inspector. Any implementation can be assigned to a `MonoShowHide` field.
 
-    class MonoShowHide
-    class MonoBehaviour
+## CallbackShowHide
 
-    IShowHide <|.. MonoShowHide
-    MonoBehaviour <|-- MonoShowHide
-```
+A base for quickly implementing your own effect. A subclass describes only what the transitions and the end states look like, while the base class stores the state and handles commands.
 
-## Создание эффектов
-Для создания собственных эффектов используется интерфейс `IShowHide` и одна из реализаций машины состояний, управляющей переходами между состояниями объекта.
+- `OnShow`, `OnHide` — start the transition and call `onCompleted` when it ends
+- `OnSetShown`, `OnSetHidden` — apply the end look immediately
+- `OnStop` — stop the transition
 
-- `ShowHideCallbackStateMachine` - реализует переходы через callback-вызовы.
-- `ShowHideUniTaskStateMachine` - реализует переходы через асинхронные методы на базе UniTask.
+Each method receives `from` — the state before the command. With `from == None` the object's look is unknown, so the method first brings the object to its initial look.
 
-Конкретный эффект реализует только поведение переходов, а управление состояниями и последовательностью переходов выполняет машина состояний.  
+### Command Handling
 
-Для создания новых эффектов предусмотрены шаблоны классов, доступные через:  
-`ПКМ → Create → Scripting → ShowHide`.  
+The inspector sets command handling separately for showing and for hiding:
+- **During a transition** (`OnInterrupt`): the opposite command reverses the transition (`Accept`, default) or is rejected (`Ignore`).
+- **In the end state** (`OnRepeat`): a repeated command is rejected (`Ignore`, default) or plays the transition again (`Restart`).
 
-Шаблоны содержат базовую реализацию методов интерфейса `IShowHide` и создание машины состояний.  
-Такой подход позволяет избежать дополнительного наследования и повторения однотипного boilerplate-кода.
+### Example Implementation
 
-<details>
-<summary> Пример реализации </summary>
-  
-```csharp 
-public sealed class ScaleShowHide : MonoShowHide
+```csharp
+public sealed class ScaleShowHide : CallbackShowHide
 {
     private Tween _tween;
-    private IShowHide _showHide;
 
-    [SerializeField] private ShowHideState _initialState;
-    [SerializeField] private bool _ignoreState;
-
-    private void Awake()
+    protected override void OnShow(ShowHideState from, Action onCompleted)
     {
-        _showHide = new ShowHideCallbackStateMachine(_initialState,
-            _ignoreState,
-            OnShow,
-            OnHide,
-            OnSetShown,
-            OnSetHidden,
-            OnStop);
-    }
+        if (from == ShowHideState.None)
+            transform.localScale = Vector3.zero;
 
-    private void OnShow(Action onCompleted)
-    {
         _tween?.Kill();
         _tween = transform.DOScale(Vector3.one, 1f).OnComplete(() => onCompleted());
     }
-    private void OnHide(Action onCompleted)
+
+    protected override void OnHide(ShowHideState from, Action onCompleted)
     {
+        if (from == ShowHideState.None)
+            transform.localScale = Vector3.one;
+
         _tween?.Kill();
         _tween = transform.DOScale(Vector3.zero, 1f).OnComplete(() => onCompleted());
     }
-    private void OnSetShown()
+
+    protected override void OnSetShown(ShowHideState from)
     {
         _tween?.Kill();
         transform.localScale = Vector3.one;
     }
-    private void OnSetHidden()
+
+    protected override void OnSetHidden(ShowHideState from)
     {
         _tween?.Kill();
         transform.localScale = Vector3.zero;
     }
-    private void OnStop()
+
+    protected override void OnStop(ShowHideState from)
     {
         _tween?.Kill();
     }
-
-    #region ShowHide
-    public override IReadOnlyEventValue<ShowHideState> State => _showHide.State;
-    public override void Show() => _showHide.Show();
-    public override void SetShown() => _showHide.SetShown();
-    public override void Hide() => _showHide.Hide();
-    public override void SetHidden() => _showHide.SetHidden();
-    public override void Stop() => _showHide.Stop();
-    #endregion
 }
 ```
-</details> 
 
-Такой подход позволяет:
-- ускорить создание новых эффектов за счёт шаблона
-- использовать единый интерфейс для всех эффектов
-- заменять реализацию без изменения управляющего кода
+# EffectAction
 
-Система также поддерживает асинхронные методы, что позволяет использовать `await` для последовательных сценариев.
+An interface and base classes for one-shot effects: the effect plays and returns the object to its initial look. Suitable for flashes, hits, particle bursts and anything that starts and finishes by itself. If the object has to be returned to its initial look separately after the effect, use ShowHide.
 
+## States
 
-# **3. Использование**
-## Базовый сценарий
-Пример использования эффекта в коде:
+- `Ready` — the object is in its initial look, the effect is ready to play
+- `Playing` — the effect is playing, then `Ready`
+- `None` — the state is unknown: control has not started yet or was stopped with `Stop()`
+
+The current state is stored in `State`, and the `OnStateChanged` event is raised when it changes.
+
+Playback:
+
+```mermaid
+stateDiagram-v2
+    direction LR
+
+    None --> Playing : Play()
+    Ready --> Playing : Play()
+    Playing --> Ready
+    Playing --> Playing : Play()
+```
+
+Instant commands work from any state:
+
+```mermaid
+stateDiagram-v2
+    direction LR
+
+    state "Any state" as Any
+    Any --> Ready : Prepare()
+    Any --> None : Stop()
+```
+
+## Example
 
 ```csharp
-[SerializeField] private MonoShowHide _effect;
+[SerializeField] private MonoEffectAction _explosionPrefab;
 
-public void ControlEffect()
+public async UniTask Explode(CancellationToken token)
 {
-    // запустить показ
-    _effect.Show();
+    var explosion = Instantiate(_explosionPrefab);
+    explosion.Prepare();                    // set the initial state
+    await explosion.PlayAsync(token);       // play and wait until finished
+    Destroy(explosion.gameObject);
+}
+```
 
-    // запустить скрытие
-    _effect.Hide();
+`PlayAsync` is available when UniTask is installed. Without it, use `Play()` and the `OnStateChanged` event.
 
-    // проверка состояния
-    if (_effect.State.Value != ShowHideState.Hidden)
+## MonoEffectAction
+
+For the same reason as with ShowHide, inspector references are declared as `MonoEffectAction`. It is an abstract `MonoBehaviour` that implements `IEffectAction` without any logic of its own — essentially an interface for the inspector. Any implementation can be assigned to a `MonoEffectAction` field.
+
+## CallbackEffectAction
+
+A base for quickly implementing your own effect. A subclass describes only how the effect plays and what its initial look is, while the base class stores the state and handles commands.
+
+- `OnPlay` — start the effect and call `onCompleted` when it ends
+- `OnPrepare` — return the object to its initial look immediately
+- `OnStop` — stop the effect
+
+Each method receives `from` — the state before the command. With `from == None` the object's look is unknown, so the method first brings the object to its initial look. With `from == Playing` the effect is already running, and the method decides whether to restart it or play another one on top.
+
+### Command Handling
+
+The inspector sets handling of a repeated command:
+- **During playback** (`OnRepeat`): a repeated `Play()` is passed to the implementation, which restarts the effect or plays another one on top (`Accept`, default), or is rejected (`Ignore`).
+
+### Example Implementation
+
+```csharp
+public sealed class PunchScaleEffect : CallbackEffectAction
+{
+    private Tween _tween;
+
+    protected override void OnPlay(EffectActionState from, Action onCompleted)
     {
-        _effect.State.Changed += OnStateChanged;
+        _tween?.Kill();
+        transform.localScale = Vector3.one;
+        _tween = transform.DOPunchScale(Vector3.one * 0.2f, 0.3f).OnComplete(() => onCompleted());
+    }
+
+    protected override void OnPrepare(EffectActionState from)
+    {
+        _tween?.Kill();
+        transform.localScale = Vector3.one;
+    }
+
+    protected override void OnStop(EffectActionState from)
+    {
+        _tween?.Kill();
     }
 }
 ```
-
-## Асинхронный сценарий
-```csharp
-private CancellationTokenSource _cts;
-private IObjectPool<MonoShowHide> _portalsPool;
-
-public async UniTask SpawnEnemyWithPortal()
-{
-    using var handle = _portalsPool.Get(out var portal);
-    await portal.ShowAsync(_cts.Token);
-    await SpawnEnemy();
-    await portal.HideAsync(_cts.Token);
-}
-```
-
-## Установка
-UPM - `https://github.com/CatCodeGames/StatefulEffects.git?path=Assets/StatefulEffects`

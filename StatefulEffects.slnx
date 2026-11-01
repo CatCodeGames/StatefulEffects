@@ -1,0 +1,12 @@
+﻿<Solution>
+  <Project Path="CatCode.StatefulEffects.csproj" />
+  <Project Path="CatCode.StatefulEffects.Editor.Tests.csproj" />
+  <Project Path="CatCode.StatefulEffects.UniTask.csproj" />
+  <Project Path="CatCode.StatefulEffects.Editor.csproj" />
+  <Project Path="CatCode.StatefulEffects.Tests.Shared.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="DOTween.Modules.csproj" />
+  <Project Path="CatCode.StatefulEffects.UniTask.Editor.Tests.csproj" />
+  <Project Path="CatCode.StatefulEffects.Tests.csproj" />
+  <Project Path="CatCode.StatefulEffects.DOTween.csproj" />
+</Solution>

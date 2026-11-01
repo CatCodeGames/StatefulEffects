@@ -158,8 +158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a39a4304a90bdc4e8cb4f677166e329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatCode.StatefulEffects.AnimatorShowHide
-  _config: {fileID: 11400000, guid: da0a277540958614ea5f255de9195e6a, type: 2}
   _animator: {fileID: 4903893321687841671}
+  _config: {fileID: 11400000, guid: 425b2eea8f3cf2c4a83ec15e220e3441, type: 2}
 --- !u!95 &4903893321687841671
 Animator:
   serializedVersion: 7
