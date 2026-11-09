@@ -1,6 +1,6 @@
 {
   "name": "com.catcode.stateful-effects",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "displayName": "StatefulEffects",
   "description": "Basic functionality and components for stateful effects",
   "unity": "2021.3",

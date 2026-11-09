@@ -15,7 +15,7 @@ namespace CatCode.StatefulEffects
         public override ShowHideState State => _state;
         public override event Action<ShowHideState> OnStateChanged;
 
-        private void Awake()
+        private void OnEnable()
         {
             _stateBehaviour = _animator.GetBehaviour<StateChangeBehaviour>();
             _stateBehaviour.StateEnter += OnStateEnter;
@@ -23,15 +23,9 @@ namespace CatCode.StatefulEffects
 
         private void OnDisable()
         {
+            _stateBehaviour.StateEnter -= OnStateEnter;
+            _stateBehaviour = null;
             Stop();
-        }
-
-        private void OnDestroy()
-        {
-            if (_stateBehaviour != null)
-                _stateBehaviour.StateEnter -= OnStateEnter;
-
-            SetState(ShowHideState.None);
         }
 
         public override void Show()
