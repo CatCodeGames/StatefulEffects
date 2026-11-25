@@ -95,7 +95,9 @@ namespace CatCode.StatefulEffects
 
         public override void Stop()
         {
-            ResetTriggers();
+            if (_animator != null)
+                ResetTriggers();
+
             SetState(ShowHideState.None);
         }
 

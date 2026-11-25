@@ -3,6 +3,11 @@
 All notable changes to this package are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [3.0.2] - 2026-11-25
+
+### Fixed
+- `AnimatorShowHide.Stop()` now transitions to `None` even if Unity has already destroyed the Animator during scene teardown.
+
 ## [3.0.1] - 2026-11-10
 
 ### Fixed

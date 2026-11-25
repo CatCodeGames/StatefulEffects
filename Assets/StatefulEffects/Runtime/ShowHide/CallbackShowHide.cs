@@ -9,8 +9,8 @@ namespace CatCode.StatefulEffects
 
         private ShowHideCore _core;
 
-        public override ShowHideState State => _core == null 
-            ? ShowHideState.None 
+        public override ShowHideState State => _core == null
+            ? ShowHideState.None
             : _core.State;
 
         public override event Action<ShowHideState> OnStateChanged;
@@ -50,14 +50,8 @@ namespace CatCode.StatefulEffects
                 case ShowHideState.None:
                     break;
                 case ShowHideState.Hidden:
-                    _core.Stop();
-                    break;
                 case ShowHideState.Showing:
-                    _core.Stop();
-                    break;
                 case ShowHideState.Shown:
-                    _core.Stop();
-                    break;
                 case ShowHideState.Hiding:
                     _core.Stop();
                     break;

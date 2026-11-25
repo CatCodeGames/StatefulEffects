@@ -38,7 +38,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: 
+    path: Cube
   m_PositionCurves: []
   m_ScaleCurves:
   - curve:
@@ -74,7 +74,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: 
+    path: Cube
   m_FloatCurves: []
   m_PPtrCurves: []
   m_SampleRate: 60
@@ -85,7 +85,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
+      path: 2429296262
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -94,7 +94,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 0
+      path: 2429296262
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -159,7 +159,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -198,7 +198,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -237,7 +237,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -267,7 +267,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -297,7 +297,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -327,7 +327,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -340,7 +340,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -352,7 +352,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -364,10 +364,10 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: 
+    path: Cube
     classID: 4
     script: {fileID: 0}
     flags: 0
-  m_HasGenericRootTransform: 1
+  m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events: []
