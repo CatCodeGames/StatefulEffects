@@ -10,7 +10,7 @@
   <body>
     <div id="unity-container" class="unity-desktop">
       <div id="unity-fullscreen-container">
-        <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
+        <canvas id="unity-canvas" width="1280" height="720" tabindex="-1"></canvas>
         <div id="unity-loading-container">
           <div id="unity-loading-bar">
             <div id="unity-logo"></div>
@@ -57,12 +57,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/DemoShowHide.loader.js";
+      var loaderUrl = buildUrl + "/StatefulEffects_Build.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/DemoShowHide.data.gz",
-        frameworkUrl: buildUrl + "/DemoShowHide.framework.js.gz",
-        codeUrl: buildUrl + "/DemoShowHide.wasm.gz",
+        dataUrl: buildUrl + "/StatefulEffects_Build.data.unityweb",
+        frameworkUrl: buildUrl + "/StatefulEffects_Build.framework.js.unityweb",
+        codeUrl: buildUrl + "/StatefulEffects_Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
 
         // If you have a custom web site structure, or want to place multiple Unity build instances on the same page,
@@ -115,8 +115,8 @@
 
       } else {
         // Desktop style: Render the game canvas container in a window that can be maximized to fullscreen:
-        fullscreenContainer.style.width = "960px";
-        fullscreenContainer.style.height = "600px";
+        fullscreenContainer.style.width = "1280px";
+        fullscreenContainer.style.height = "720px";
       }
 
 
